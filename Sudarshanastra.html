@@ -2487,8 +2487,8 @@ html.ed-user:not(.ed-desk) #xtAdd{display:none!important}
 .rx-f{display:flex;gap:8px;flex-wrap:wrap}.rx-f .btn{min-width:110px;justify-content:center;font-weight:700}
 #rxC:disabled{opacity:.5}
 /* case drop-down 25% shorter (13-11) */
-#topbar #caseSel{max-width:210px;min-width:135px}
-@media (max-width:1500px){#topbar #caseSel{max-width:150px}}
+#topbar #caseSel{max-width:270px;min-width:150px}
+@media (max-width:1500px){#topbar #caseSel{max-width:200px}}
 
 /* Login to Workspace: bold text, key icon on a white disc */
 .hp-top .hp-btn.big{font-weight:800;letter-spacing:.2px}
@@ -2633,6 +2633,25 @@ body.ft-body{overflow:hidden}body.ft-body .ft-btn{display:none}
 tr.ft-hit,.jm-bar.ft-hit,.lr-k.ft-hit,.mir-t.ft-hit{outline:2px solid #facc15;outline-offset:1px}
 @media print{#ftBar{display:none}.ft-on{position:static!important;overflow:visible}}
 .ft-blk>.ft-btn.ft-c{position:absolute;top:0;right:0;z-index:3;opacity:.55;padding:2px 8px}.ft-blk:hover>.ft-btn.ft-c{opacity:1}.ft-blk.ft-on{padding:20px!important}
+.kpi .hint .cd3{display:flex;justify-content:space-between;gap:6px;padding:2px 6px;margin-top:3px;border-radius:6px;background:rgba(255,255,255,.06);cursor:pointer;font-size:11.5px}.kpi .hint .cd3:hover{background:rgba(255,255,255,.16)}.kpi .hint .cd3.bad b{color:#fca5a5}.kpi .hint .cd3.ok b{color:#86efac}
+.cc-out{display:inline-block;padding:3px 9px;border-radius:8px;font-weight:700;font-size:12px;line-height:1.25;border:1px solid;white-space:nowrap}.cc-out small{display:block;font-weight:600;font-size:10.5px;opacity:.92}
+.cc-out.run{border-color:#ca8a04;background:rgba(234,179,8,.12);color:#fcd34d}.cc-out.cs{border-color:#16a34a;background:rgba(22,163,74,.16);color:#86efac}.cc-out.fr{border-color:#6b7280;background:rgba(107,114,128,.2);color:#d1d5db}.cc-out.ppi{border-color:#2563eb;background:rgba(37,99,235,.16);color:#93c5fd}.cc-out.ppi b{color:#fca5a5}
+html[data-theme="light"] .cc-out.run{color:#92400e}html[data-theme="light"] .cc-out.cs{color:#166534}html[data-theme="light"] .cc-out.fr{color:#374151}html[data-theme="light"] .cc-out.ppi{color:#1e40af}
+.bn-dot.k{background:#9ca3af;box-shadow:0 0 5px #9ca3af;animation:none}.bn-dot.y{background:#facc15;box-shadow:0 0 6px #facc15;animation:none}.bn-dot.o{background:#f97316;box-shadow:0 0 6px #f97316,0 0 12px #fb923c;animation:none}
+.bn-dot.r{background:#ef4444;box-shadow:0 0 6px #ef4444,0 0 14px #f87171;animation:bnSlow 2.4s ease-in-out infinite}.bn-due.done .bn-dot.g{animation:none;background:#22c55e;box-shadow:0 0 6px #22c55e}
+@keyframes bnSlow{0%,100%{opacity:1;transform:scale(1.1)}50%{opacity:.15;transform:scale(.8)}}
+.bn-due.bl-fr{border-color:#6b7280!important;background:rgba(107,114,128,.22)!important}.bn-due.bl-o{background:linear-gradient(135deg,#c2410c,#f97316 55%,#ea580c);border-color:#fdba74}.bn-due.bl-r{background:linear-gradient(135deg,#991b1b,#dc2626 55%,#b91c1c);border-color:#fca5a5}
+@media (prefers-reduced-motion:reduce){.bn-dot.r{animation:none}}
+/* Brand heading tidy-up (Vijay 14-11): name and Hindi name side by side, everything left-aligned, no stretched letters */
+.hp-brand>div{display:flex!important;flex-direction:column;align-items:flex-start;width:auto;gap:3px}
+.hp-brand>div>b{display:flex!important;justify-content:flex-start;align-items:baseline;gap:12px;font-size:32px!important;line-height:1.12;font-weight:800;letter-spacing:.2px;white-space:nowrap}
+.hp-brand>div>b .hp-hi{margin-left:0!important;font-size:.95em!important;padding-left:12px!important;border-left:2px solid rgba(251,191,36,.45)}
+.hp-brand>div>small{text-align:left!important;text-align-last:auto!important;letter-spacing:3px!important;font-size:12.5px!important;font-weight:700;color:#93c5fd!important;margin-top:0}
+.hp-by.hp-one{display:inline-flex!important;justify-content:flex-start;gap:6px;font-size:11.5px!important;letter-spacing:1px!important;padding:3px 12px!important;margin-top:5px}
+.hp-by.hp-one i{margin:0 4px!important}
+.hp-onehi{text-align:left!important;text-align-last:auto!important;font-size:15px!important;margin-top:4px!important;color:#fde68a}
+[data-theme=light] .hp-brand>div>small{color:#1d4ed8!important}
+@media (max-width:900px){.hp-brand>div>b{font-size:24px!important}}
 
 </style>
 </head>
@@ -2683,7 +2702,7 @@ tr.ft-hit,.jm-bar.ft-hit,.lr-k.ft-hit,.mir-t.ft-hit{outline:2px solid #facc15;ou
         <div class="hp-feat" style="--fc:#06b6d4"><span class="hp-fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><div><b>Analytics</b><p>The same mobile, account, IP or e-mail across complaints, banks and platforms.</p></div></div>
         <div class="hp-feat" style="--fc:#eab308"><span class="hp-fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h5"/></svg></span><div><b>Case File &amp; Notices</b><p>Case reports, notices to banks and platforms, and CSV / PDF exports.</p></div></div>
     </section>
-    <footer class="hp-foot"><b>SudarshanAshtra</b> <span lang="hi">(सुदर्शनास्त्र)</span> – Cyber Crime Analysis &amp; Tracking · <b>One Platform | Every Investigation | Complete Resolution</b> · v2.0 · Build 2026-11-14 18:12 IST · Works in Chrome / Edge · Only analyses records you lawfully hold · All data stays inside this browser on this computer</footer>
+    <footer class="hp-foot"><b>SudarshanAshtra</b> <span lang="hi">(सुदर्शनास्त्र)</span> – Cyber Crime Analysis &amp; Tracking · <b>One Platform | Every Investigation | Complete Resolution</b> · v2.0 · Build 2026-11-14 20:34 IST · Works in Chrome / Edge · Only analyses records you lawfully hold · All data stays inside this browser on this computer</footer>
   </div>
 
   <div class="lg-wrap" id="lgWrap" aria-hidden="true">
@@ -3805,7 +3824,7 @@ function openImport(allowed, onDone, presetFiles) {
   const box = $('.ip-case', body); let sel = isScope(S.caseId) ? (S.prevCase && S.cases.some(x => x.id === S.prevCase) ? S.prevCase : S.cases[0].id) : S.caseId, editing = false;
   const fillSel = () => { $('#ipCase', body).innerHTML = S.cases.map(x => `<option value="${x.id}" ${x.id === sel ? 'selected' : ''}>${esc(x.fir ? x.fir + ' – ' + x.name : x.name)}</option>`).join('') + `<option value="new" ${sel === 'new' ? 'selected' : ''}>➕ New case (type FIR / Complaint No. below)</option>`; };
   const drawF = () => { const c = sel === 'new' ? { year: String(new Date().getFullYear()), ps: activeCase().ps || '', district: activeCase().district || '' } : S.cases.find(x => x.id === sel) || {}, open = editing || sel === 'new';
-    $('#ipF', body).innerHTML = IF.map(([k, l, t]) => CaseBox.field(k, l, t, k === 'year' ? CaseBox.yearOf(c) : c[k])).join(''); CaseBox.wire(box);
+    $('#ipF', body).innerHTML = IF.map(([k, l, t]) => CaseBox.field(k, l, t, k === 'year' ? CaseBox.yearOf(c) : c[k])).join(''); CaseBox.wire(box, sel === 'new' ? null : c);
     $$('#ipF [data-cb]', body).forEach(i => i.disabled = !open); box.classList.toggle('ip-open', open);
     $('#ipEd', body).textContent = editing ? '✖ Cancel edit' : '✏ Edit'; $('#ipEd', body).disabled = sel === 'new'; $('#ipDel', body).disabled = sel === 'new';
     $('#ipSt', body).innerHTML = sel === 'new' ? 'New case – fill the details and press <b>OK</b>' : `Files go into: <b>${esc(c.name || '')}</b>${sel === S.caseId ? ' (open now)' : ' – press OK to open it'}`; $('#ipErr', body).textContent = ''; };
@@ -5787,7 +5806,7 @@ const Reports = {
     const xl = Analysis.crossLinks().filter(x => x.sections >= 2 || x.refs >= 2).sort((a, b) => b.sections - a.sections || b.refs - a.refs);
     const socC = ['mobile', 'email', 'imei', 'ip'].map(f => [f, Analysis.socCommon(f).filter(g => g.profiles >= 2)]).filter(x => x[1].length);
     const html = `<h1>Case Analysis Report</h1><div class="muted">Generated ${new Date().toLocaleString('en-IN')} · SudarshanAshtra</div>
-      <h2>Case details</h2><table>${[['Case', c.name], ['FIR / Case No', c.fir], ['Sections', c.section], ['Police Station', c.ps], ['Police Commissionerate', juris(c.district)], ['IO', [c.io, c.io_rank].filter(Boolean).join(', ')], ['NCRP Ack', c.ack], ['Status', c.status], ['Brief facts', c.desc]].filter(r => r[1]).map(r => `<tr><th style="width:180px">${r[0]}</th><td style="white-space:pre-wrap">${esc(r[1])}</td></tr>`).join('')}</table>
+      <h2>Case details</h2><table>${[['Case', c.name], ['FIR / Case No', c.fir], ['Sections', c.section], ['Police Station', c.ps], ['Police Commissionerate', juris(c.district)], [CaseBox.role(c), [c.io, c.io_rank].filter(Boolean).join(', ')], ['NCRP Ack', c.ack], ['Status', c.status], ['Brief facts', c.desc]].filter(r => r[1]).map(r => `<tr><th style="width:180px">${r[0]}</th><td style="white-space:pre-wrap">${esc(r[1])}</td></tr>`).join('')}</table>
       <h2>Summary</h2>${[['Complaints', d.ncrp.length], ['Reported loss', fmtINR(sum(d.ncrp, r => r.amount))], ['Transactions analysed', d.txns.length], ['Accounts in trail', acc.length], ['Max layer', Math.max(0, ...acc.map(a => a.layer))], ['Amount on hold', fmtINR(sum(acc, a => a.hold))], ['High-risk accounts', acc.filter(a => a.score >= 60).length], ['Social profiles', d.social.length]].map(k => `<span class="kp">${k[0]}<b>${k[1]}</b></span>`).join('')}
       ${d.ncrp.length ? '<h2>NCRP complaints</h2>' + this.tbl([['ack_no', 'Ack No'], ['date', 'Date'], ['victim_name', 'Victim'], ['district', 'District'], ['category', 'Category'], ['amount', 'Amount', fmtINR], ['hold_amount', 'Hold', fmtINR], ['status', 'Status']], d.ncrp) : ''}
       ${svg ? '<h2>Money trail flow chart</h2>' + svg : ''}
@@ -5843,7 +5862,7 @@ function render() {
 function applyTheme() { document.documentElement.dataset.theme = S.settings.theme === 'light' ? 'light' : 'dark'; try { DocFont.apply(); } catch (e) { } }
 
 /* ---------- Cases ---------- */
-function fillCaseSel() { if (typeof AllMode !== 'undefined') { $('#caseSel').innerHTML = AllMode.options(); return; } $('#caseSel').innerHTML = S.cases.map(c => `<option value="${c.id}" ${c.id === S.caseId ? 'selected' : ''}>${esc(c.name)}${c.fir ? ' · ' + esc(c.fir) : ''}</option>`).join(''); }
+function fillCaseSel() { if (typeof AllMode !== 'undefined') { const cs = $('#caseSel'); cs.innerHTML = AllMode.options(); const so = cs.options[cs.selectedIndex]; cs.title = so ? so.textContent : ''; return; } $('#caseSel').innerHTML = S.cases.map(c => `<option value="${c.id}" ${c.id === S.caseId ? 'selected' : ''}>${esc(c.name)}${c.fir ? ' · ' + esc(c.fir) : ''}</option>`).join(''); }
 async function switchCase(id) {
   if (S.caseId && S.data && !isScope(S.caseId)) { clearTimeout(saveTimer); DB.set('case:' + S.caseId, S.data).catch(e => console.warn('save', e)); }   // saved in the background – reads of that case wait for it
   if (S.caseId && !isScope(S.caseId)) S.prevCase = S.caseId;
@@ -5859,13 +5878,21 @@ async function newCase(name) {
 /* ---------- Case box: one form to select / create a case and fill its main details (used on Dashboard and top bar) ---------- */
 const CaseBox = {
   F: [['ctype', 'Case Type', 'ct'], ['fir', 'FIR No.'], ['year', 'Year'], ['ps', 'Police Station'], ['district', 'District / Commissionerate'], ['state', 'State', 'st'], ['io', 'IO Name'], ['io_mobile', 'IO Mobile'], ['io_posting', 'IO Posting'], ['section', 'Sections of law']],
+  /* NCRP case (no FIR yet): primary enquiry is by the EO; once the FIR No. is filled the IO takes over (Vijay 14-11) */
+  role(c) { c = c || {}; const noFir = !String(c.fir || '').trim(); return noFir && (c.id || AllMode.ackOf(c).length || /ncrp|without fir/i.test(c.ctype || '')) ? 'EO' : 'IO'; },
+  lbl(l, c) { return String(l).replace(/^IO\b/, this.role(c)); },
   states() { try { return Off.INST; } catch (e) { return []; } },
   types() { try { return Off.ctList(); } catch (e) { return ['Investment Fraud', 'Mobile Hacking (APK)', 'Social Media']; } },
   yearOf(c) { return c.year || ((String(c.fir || '').match(/\/\s*(20\d\d)\b/) || [])[1]) || ''; },
   autoName(o) { const f = String(o.fir || '').replace(/^\s*FIR\s*(No\.?)?\s*/i, ''); return [o.ctype || 'Case', f ? 'FIR ' + f + (o.year && !f.includes(o.year) ? '/' + o.year : '') : ''].filter(Boolean).join(' · '); },
   field(k, l, t, v) { const opts = (L, add) => `<option value="">— select —</option>${[...L, ...(v && !L.includes(v) ? [v] : [])].map(s => `<option ${s === v ? 'selected' : ''}>${esc(s)}</option>`).join('')}${add ? '<option value="__new">➕ Add new…</option>' : ''}`;
-    return `<label>${l}${t === 'ct' ? `<select data-cb="${k}">${opts(this.types(), true)}</select>` : t === 'st' ? `<select data-cb="${k}">${opts(this.states())}</select>` : `<input data-cb="${k}" value="${esc(v || '')}"${k === 'year' ? ' inputmode="numeric" maxlength="4"' : k === 'io_mobile' ? ' inputmode="tel" maxlength="14"' : ''}>`}</label>`; },
-  wire(box) { const ct = $('[data-cb="ctype"]', box); if (ct) ct.onchange = () => { if (ct.value !== '__new') return; const n = (prompt('New case type:') || '').trim(); if (!n) { ct.value = ''; return; } try { const L = Off.ctList(); if (!L.includes(n)) { L.push(n); EditList.save('cd-ctype', L); } } catch (e) { } ct.insertAdjacentHTML('afterbegin', `<option>${esc(n)}</option>`); ct.value = n; }; },
+    return `<label>${/^IO\b/.test(l) ? `<span data-iol="${esc(l.slice(2))}">${esc(l)}</span>` : l}${t === 'ct' ? `<select data-cb="${k}">${opts(this.types(), true)}</select>` : t === 'st' ? `<select data-cb="${k}">${opts(this.states())}</select>` : `<input data-cb="${k}" value="${esc(v || '')}"${k === 'year' ? ' inputmode="numeric" maxlength="4"' : k === 'io_mobile' ? ' inputmode="tel" maxlength="14"' : ''}>`}</label>`; },
+  wire(box, c0) {
+    box._iou = () => { const v = k => { const i = $(`[data-cb="${k}"]`, box); return i ? i.value : (c0 || {})[k]; }, ak = $('[data-cb="ack"]', box);
+      const R = this.role({ id: c0 && c0.id, fir: v('fir'), ctype: v('ctype'), ack: ak ? (ak.value || 'x') : (c0 || {}).ack }); $$('[data-iol]', box).forEach(s => s.textContent = R + s.dataset.iol); };
+    if (!box._iow) { box._iow = 1; ['input', 'change'].forEach(ev => box.addEventListener(ev, e => { if (e.target.matches && e.target.matches('[data-cb="fir"],[data-cb="ctype"],[data-cb="ack"]') && box._iou) box._iou(); })); }
+    box._iou();
+    const ct = $('[data-cb="ctype"]', box); if (ct) ct.onchange = () => { if (ct.value !== '__new') return; const n = (prompt('New case type:') || '').trim(); if (!n) { ct.value = ''; return; } try { const L = Off.ctList(); if (!L.includes(n)) { L.push(n); EditList.save('cd-ctype', L); } } catch (e) { } ct.insertAdjacentHTML('afterbegin', `<option>${esc(n)}</option>`); ct.value = n; }; },
   read(box) { const o = {}; $$('[data-cb]', box).forEach(i => o[i.dataset.cb] = i.value === '__new' ? '' : i.value.trim()); return o; },
   check(o) { const E = [['FIR No.', VCK('case', o.fir, /ncrp|without fir/i.test(o.ctype || '') ? 'NCRP' : '')], ['Year', VCK('year', o.year)], ['IO Mobile', VCK('mobile', o.io_mobile)]].filter(x => x[1]);
     if (E.length) Valid.pop(E.map(x => ({ where: x[0], msg: x[1] }))); return E.map(x => x[0] + ': ' + x[1]).join(' · '); },
@@ -5876,7 +5903,7 @@ const CaseBox = {
       const m = UI.modal(sel === 'new' ? '➕ New case' : '📁 Case details', `<div class="ip-case cbm"><div class="ip-hd cbm-hd"><span class="ip-ic">${sel === 'new' ? '➕' : '📁'}</span><b>${sel === 'new' ? 'Create new case' : 'Case details'}</b><span class="ip-st">${sel === 'new' ? 'Fill the details and press <b>Save</b>' : esc(c.name || '')}</span></div><div class="cbm-in"><div class="cb-sel"><label>Select case<select id="cbSel"><option value="new" ${sel === 'new' ? 'selected' : ''}>➕ New case</option>${S.cases.map(x => `<option value="${x.id}" ${x.id === sel ? 'selected' : ''}>${esc(x.name)}${x.fir ? ' · ' + esc(x.fir) : ''}</option>`).join('')}</select></label></div>
         <div class="map-grid cb-grid">${this.F.map(([k, l, t]) => this.field(k, l, t, k === 'year' ? this.yearOf(c) : c[k])).join('')}<label style="grid-column:1/-1">Case name <span class="small muted">(blank = made from Case Type and FIR)</span><input data-cb="name" value="${esc(sel === 'new' ? '' : c.name || '')}" placeholder="${esc(this.autoName(c))}"></label></div><div class="small" id="cbErr" style="color:var(--bad);min-height:1.2em"></div></div></div>`,
         [{ label: 'Close', onClick: UI.closeModal }, { label: sel === 'new' ? '💾 Save new case' : '💾 Save', cls: 'primary', onClick: () => this.save(sel, m) }]);
-      this.wire(m); $('#cbSel', m).onchange = e => { sel = e.target.value; draw(); }; };
+      this.wire(m, sel === 'new' ? null : c); $('#cbSel', m).onchange = e => { sel = e.target.value; draw(); }; };
     draw();
   },
   async save(sel, box) { const o = this.read(box), err = this.check(o); if (err) { $('#cbErr', box).textContent = err; return; }
@@ -5891,7 +5918,7 @@ const CaseBox = {
   _ms: { q: '', t: '', st: '', y: '', sort: 'created', dir: -1 },
   manager() {
     const st = this._ms, V = (c, k) => k === 'year' ? this.yearOf(c) : k === 'status' ? (c.status || 'Under investigation') : (c[k] || '');
-    const COLS = [['ctype', 'Case Type'], ['fir', 'FIR No.'], ['year', 'Year'], ['ps', 'Police Station'], ['district', 'District / Commissionerate'], ['state', 'State'], ['io', 'IO Name'], ['io_mobile', 'IO Mobile'], ['io_posting', 'IO Posting'], ['section', 'Sections'], ['status', 'Status']];
+    const COLS = [['ctype', 'Case Type'], ['fir', 'FIR No.'], ['year', 'Year'], ['ps', 'Police Station'], ['district', 'District / Commissionerate'], ['state', 'State'], ['io', 'IO / EO Name'], ['io_mobile', 'IO / EO Mobile'], ['io_posting', 'IO / EO Posting'], ['section', 'Sections'], ['status', 'Status']];
     const done = c => typeof CaseStat !== 'undefined' ? CaseStat.done(c) : /complet/i.test(c.status || '');
     const body = UI.drawer('📁 All cases', '<div id="cmW"></div>'); $('#drawer').classList.add('dx-wide');
     const draw = () => { const A = S.cases, q = st.q.toLowerCase();
@@ -5920,10 +5947,10 @@ const CaseBox = {
   strip(el) { const c = activeCase(), V = k => k === 'year' ? this.yearOf(c) : c[k];
     const filled = this.F.filter(([k]) => V(k)).length;
     el.innerHTML = `<div class="cb-strip"><div class="cb-hd"><span class="cb-ic">📁</span><b>Case details</b><span class="cb-sub">${esc(c.name || '')}</span><span class="grow"></span><button class="btn sm cb-b" id="cbAll" title="See and edit all cases line by line">📋 All cases (${S.cases.length})</button><button class="btn sm cb-b" id="cbEd">✏ Edit</button><button class="btn sm cb-b" id="cbNew" title="New case">➕</button><button class="btn sm cb-b cb-x" id="cbDel" title="Delete this case">➖</button><span class="cb-big">${filled}/${this.F.length}<small>fields filled</small></span></div>
-      <div class="cb-chips">${this.F.map(([k, l]) => `<div class="cb-chip ${V(k) ? '' : 'empty'}"><span>${l}</span><b>${esc(V(k) || '—')}</b></div>`).join('')}</div></div>`;
+      <div class="cb-chips">${this.F.map(([k, l]) => `<div class="cb-chip ${V(k) ? '' : 'empty'}"><span>${this.lbl(l, c)}</span><b>${esc(V(k) || '—')}</b></div>`).join('')}</div></div>`;
     $('#cbNew', el).onclick = () => this.open('new'); $('#cbAll', el).onclick = () => this.manager(); $('#cbDel', el).onclick = () => deleteCase(c.id);
     $('#cbEd', el).onclick = () => { $('.cb-chips', el).outerHTML = `<div class="map-grid cb-grid cb-inl">${this.F.map(([k, l, t]) => this.field(k, l, t, V(k))).join('')}</div><div class="row" style="gap:6px;margin-top:8px;align-items:center"><button class="btn primary sm" id="cbSv">💾 Save</button><button class="btn sm" id="cbCx">Cancel</button><span class="small" id="cbErr" style="color:var(--bad)"></span></div>`;
-      $('#cbEd', el).style.display = 'none'; this.wire(el);
+      $('#cbEd', el).style.display = 'none'; this.wire(el, c);
       $('#cbCx', el).onclick = () => this.strip(el);
       $('#cbSv', el).onclick = async () => { const o = this.read(el), err = this.check(o); if (err) return $('#cbErr', el).textContent = err; const auto = !c.name || c.name === this.autoName(c) || /^Case \d+$/.test(c.name); Object.assign(c, o); if (auto) c.name = this.autoName(c); await saveMeta(); fillCaseSel(); render(); UI.toast('Case details saved'); }; };
   }
@@ -14858,10 +14885,23 @@ const CCTNS = {
       const defs = [R, R.filter(r => this.isPend(r)), R.filter(r => r.cd), R.filter(r => r.pending), R.filter(r => r.notices), R.filter(r => r.fin === 'CS'), R.filter(r => r.fin === 'PPI'), R.filter(r => r.fin === 'FR')];
       const fcols = [{ key: 'name', label: 'Case' }, { key: 'fir', label: 'FIR' }, { key: 'finNo', label: 'CS / FR No.' }, { key: 'finDate', label: 'Date', render: r => esc(this.dmy(r.finDate)) }, { key: 'finInfo', label: 'Details' }, { key: 'io', label: 'IO' }];
       $$('#ccK .kpi', el).forEach((k, i) => this.LV && i >= 2 && i <= 4 ? DashX.bind(k, this.LV[['cd', 'pend', 'notices'][i - 2]](R)) : DashX.bind(k, { title: i === 5 ? 'CS – Charge Sheet' : i === 6 ? 'CS-PPI – Charge Sheet, further investigation pending' : i === 7 ? 'FR – Final Report' : $('.label', k).textContent, rows: () => defs[i], cols: i >= 5 ? fcols : [{ key: 'name', label: 'Case' }, { key: 'fir', label: 'FIR' }, { key: 'status', label: 'Status' }, { key: 'cdLast', label: 'Last CD No.', num: true }, { key: 'pending', label: 'Pending', num: true }, { key: 'pendList', label: 'Pending work' }], sort: i >= 5 ? 'finDate' : 'pending', pv: r => i >= 5 ? [r.name, [r.finNo && 'No. ' + r.finNo, this.dmy(r.finDate)].filter(Boolean).join(' · ')] : [r.name, r.pending + ' pending'], onRow: r => { UI.closeDrawer(); if (!r.cur) switchCase(r.id); } }));
+      /* Case Diary Parts box: Total CD / Last CD / Missing CD, each with its own hover and click (Vijay 14-11) */
+      try { const k2 = $$('#ccK .kpi', el)[2], h = k2 && ($('.hint', k2) || k2.appendChild(Object.assign(document.createElement('div'), { className: 'hint' })));
+        if (h && this.LV) {
+          const withCd = R.filter(r => r.cd), one = R.length === 1 ? R[0] : withCd.length === 1 ? withCd[0] : null, gapN = sum(R, r => r.cdGap ? String(r.cdGap).split(/\s*,\s*/).filter(Boolean).length : 0);
+          const lastTxt = one ? (one.cdLast ? 'CD ' + one.cdLast + (one.lastCd ? ' · ' + one.lastCd : '') : '—') : withCd.length + ' case(s)';
+          const missTxt = one ? (one.cdGap || 'None') : gapN ? gapN + ' in ' + R.filter(r => r.cdGap).length + ' case(s)' : 'None';
+          h.innerHTML = `<span class="cd3" data-cd3="tot">Total CD <b>${fmtNum(tot('cd'))}</b></span><span class="cd3" data-cd3="last">Last CD <b>${esc(lastTxt)}</b></span><span class="cd3 ${gapN ? 'bad' : 'ok'}" data-cd3="miss">Missing CD <b>${esc(missTxt)}</b></span>`;
+          const lastRows = () => withCd.map(r => { const L = (r.cdList || []).slice().sort((x, y) => (+y.no || 0) - (+x.no || 0)), x = L[0] || {}; return { ...x, no: r.cdLast || x.no, date: r.lastCd || x.date, _case: r.name, _id: r.id }; });
+          const DF = { tot: this.LV.cd(R), miss: this.LV.gap(R),
+            last: { title: 'Last CD – Each Case', rows: lastRows, cols: [{ key: '_case', label: 'Case' }, { key: 'no', label: 'Last CD No.', num: true }, { key: 'date', label: 'Date' }, { key: 'text', label: 'Short Summary', render: r => `<span class="small">${esc(String(r.text || '').slice(0, 300))}</span>` }],
+              pv: x => ['CD ' + (x.no || '?') + ' · ' + x._case, x.date], onRow: x => { const c = this.LV.cd([R.find(r => r.id === x._id)]); const row = (c.rows() || []).find(y => String(y.no) === String(x.no)); if (row && c.onRow) c.onRow(row); else if (x._id !== S.caseId) switchCase(x._id); } } };
+          $$('[data-cd3]', h).forEach(c => { const d = DF[c.dataset.cd3]; DashX.bind(c, d); c.onclick = e => { e.stopPropagation(); DashX.open(d); }; });
+        } } catch (e) { console.warn('cd3', e); }
       $('#ccAll', el).classList.remove('muted', 'small');
       Table($('#ccAll', el), { rows: R, pageSize: 10, sortKey: 'pending', sortDir: -1, exportName: 'all_cases_cctns', onRow: r => { if (!r.cur) switchCase(r.id); },
-        columns: [{ key: 'name', label: 'Case', render: r => `<b>${esc(r.name)}</b>${r.cur ? ' <span class="badge info">open</span>' : ''}<div class="small muted">${esc([r.fir && 'FIR ' + r.fir, r.ps, r.section].filter(Boolean).join(' · '))}</div>` },
-          { key: 'status', label: 'Status', render: r => r.fin ? `<span class="cc-fin ${(this.FIN[r.fin] || this.FIN.CS)[2]}">${r.fin === 'PPI' ? 'CS-PPI' : r.fin}${r.finNo ? ' ' + esc(r.finNo) : ''}</span>` : esc(r.status) }, { key: 'bn', label: 'CS / FR Due (BNSS 187)', sortVal: r => r.bn && r.bn.start && !r.bn.filed ? r.bn.left : r.bn && r.bn.filed ? 2e9 : 1e9, render: r => this.bnBadge(r.bn, true) }, { key: 'complaints', label: 'Complaints', num: true }, { key: 'amount', label: 'Amount', num: true, render: r => r.amount ? fmtINR(r.amount) : '' }, { key: 'firUp', label: 'FIR read' }, { key: 'cd', label: 'CD Parts', num: true, render: r => r.cd ? `<span class="lv-c" data-lv="cc" data-k="cd" data-id="${r.id}">${r.cd}</span>` : '0' }, { key: 'cdLast', label: 'Last CD No.', num: true }, { key: 'lastCd', label: 'Last CD Date' }, { key: 'cdGap', label: 'Missing CD', render: r => r.cdGap ? `<b class="bad-t lv-c" data-lv="cc" data-k="gap" data-id="${r.id}">${esc(r.cdGap)}</b>` : '' },
+        columns: [{ key: 'name', label: 'Case', render: r => `<b>${esc(r.name)}</b>${r.cur ? ' <span class="badge info" title="This case is the one shown below on this page">👁 Viewing</span>' : ''}<div class="small muted">${esc([r.fir && 'FIR ' + r.fir, r.ps, r.section].filter(Boolean).join(' · '))}</div>` },
+          { key: 'status', label: 'Status', sortVal: r => ({ PPI: 1, CS: 2, FR: 3 })[r.fin] || 0, render: r => this.outcome(S.cases.find(c => c.id === r.id), r) }, { key: 'bn', label: 'CS / FR Due (BNSS 187)', sortVal: r => r.bn && r.bn.start && !r.bn.filed ? r.bn.left : r.bn && r.bn.filed ? 2e9 : 1e9, render: r => this.bnBadge(r.bn, true) }, { key: 'complaints', label: 'Complaints', num: true }, { key: 'amount', label: 'Amount', num: true, render: r => r.amount ? fmtINR(r.amount) : '' }, { key: 'firUp', label: 'FIR read' }, { key: 'cd', label: 'CD Parts', num: true, render: r => r.cd ? `<span class="lv-c" data-lv="cc" data-k="cd" data-id="${r.id}">${r.cd}</span>` : '0' }, { key: 'cdLast', label: 'Last CD No.', num: true }, { key: 'lastCd', label: 'Last CD Date' }, { key: 'cdGap', label: 'Missing CD', render: r => r.cdGap ? `<b class="bad-t lv-c" data-lv="cc" data-k="gap" data-id="${r.id}">${esc(r.cdGap)}</b>` : '' },
           { key: 'done', label: 'Done', num: true, render: r => r.done ? `<span class="lv-c" data-lv="cc" data-k="done" data-id="${r.id}">${r.done}</span>` : '0' }, { key: 'pending', label: 'Pending', num: true, render: r => r.pending ? `<b class="bad-t lv-c" data-lv="cc" data-k="pend" data-id="${r.id}">${r.pending}</b>` : '0' }, { key: 'notices', label: 'Notices', num: true, render: r => r.notices ? `<span class="lv-c" data-lv="cc" data-k="notices" data-id="${r.id}">${r.notices}</span>` : '0' }] });
     });
   },
@@ -14878,14 +14918,26 @@ const CCTNS = {
     const el = Math.floor((new Date(today()) - new Date(start)) / 864e5), left = limit - el;
     return { start, kind: c.d187 ? (c.d187k === 'fir' ? 'FIR date' : 'Arrest / first remand') : 'FIR date', limit, heavy, el, left, fd, pc: limit === 90 ? 60 : 40, filed };
   },
+  /* Case outcome (Vijay 14-11): FR = Closed, CS = Closed & sent to Court for trial, CS-PPI = Part Pending (action on some targets, rest pending) */
+  ppiCnt(f) { const t = +f.ppiTot || 0, d = Math.min(t || 1e9, +f.ppiDone || 0); return t ? { t, d, p: Math.max(0, t - d) } : null; },
+  outcome(c, r) { const f = (c && c.final && c.final.type) ? c.final : r && r.fin ? { type: r.fin, no: r.finNo } : null, no = f && f.no ? ' ' + esc(f.no) : '';
+    if (!f) return `<span class="cc-out run" title="CS / FR not filed yet">🔎 ${esc((c && c.status) || 'Under Investigation')}</span>`;
+    if (f.type === 'FR') return `<span class="cc-out fr" title="${esc(this.finTxt(f))}">🔒 Closed<small>FR${no}</small></span>`;
+    if (f.type === 'CS') return `<span class="cc-out cs" title="${esc(this.finTxt(f))}">⚖ Closed · Sent To Court<small>CS${no} · Trial</small></span>`;
+    const k = this.ppiCnt(f);
+    return `<span class="cc-out ppi" title="${esc(this.finTxt(f))}">⏳ Part Pending<small>CS-PPI${no}${k ? ` · Action ${k.d} of ${k.t} · <b>${k.p} Pending</b>` : f.ppi ? ' · ' + esc(String(f.ppi).slice(0, 40)) : ''}</small></span>`;
+  },
   bnBadge(b, small) {
     if (!b) return '';
     if (b.filed) { const f = b.filed, nm = f.type === 'PPI' ? 'CS-PPI' : f.type, on = f.date ? this.dmy(f.date) : '', dd = b.start && f.date ? Math.floor((new Date(f.date) - new Date(b.start)) / 864e5) : null;
       const t = `${nm}${f.no ? ' No. ' + f.no : ''} filed${on ? ' on ' + on : ''}${dd != null ? ` – day ${dd} of ${b.limit} (BNSS 187)` : ''}.${f.type === 'PPI' ? ' Further investigation is pending (BNSS 193(9)).' : ''} Click to see or change the dates.`;
-      return small ? `<span class="bn-due sm done" title="${esc(t)}"><i class="bn-dot g"></i>✅ ${esc(nm)} Filed${dd != null ? `<small>Day ${dd} of ${b.limit}</small>` : ''}</span>` : `<button class="bn-due done" data-bn title="${esc(t)}"><i class="bn-dot g"></i><b>CS / FR Due:</b> ✅ ${esc(nm)} Filed${on ? ' · ' + esc(on) : ''}${dd != null ? `<small>Day ${dd} of ${b.limit}</small>` : ''}</button>`; }
+      const lc = f.type === 'FR' ? 'fr' : 'cs';
+      return small ? `<span class="bn-due sm done bl-${lc}" title="${esc(t)}"><i class="bn-dot ${lc === 'fr' ? 'k' : 'g'}"></i>✅ ${esc(nm)} Filed${dd != null ? `<small>Day ${dd} of ${b.limit}</small>` : ''}</span>` : `<button class="bn-due done bl-${lc}" data-bn title="${esc(t)}"><i class="bn-dot ${lc === 'fr' ? 'k' : 'g'}"></i><b>CS / FR Due:</b> ✅ ${esc(nm)} Filed${on ? ' · ' + esc(on) : ''}${dd != null ? `<small>Day ${dd} of ${b.limit}</small>` : ''}</button>`; }
     if (!b.start) return small ? '<span class="muted small">Set date</span>' : `<button class="bn-due nodate" data-bn title="Set the FIR / arrest date to count the BNSS 187 days"><i class="bn-dot r"></i>CS / FR Due: Set Start Date</button>`;
     const t = `BNSS 187 – ${b.limit} days (${b.heavy ? 'death / life / 10+ years' : 'other offences'}) from ${b.kind} ${this.dmy(b.start)}. Police custody up to 15 days, in parts, within the first ${b.pc} days. After ${b.limit} days without CS / FR the accused gets default bail.`;
-    return `<${small ? 'span' : 'button'} class="bn-due ${b.left < 0 ? 'over' : ''} ${small ? 'sm' : ''}" ${small ? '' : 'data-bn'} title="${esc(t)}"><i class="bn-dot ${b.left > 10 ? 'g' : 'r'}"></i>${small ? '' : '<b>CS / FR Due:</b> '}${b.left >= 0 ? `${b.left} Days Left` : `Overdue ${-b.left} Days`}<small>Day ${Math.max(0, b.el)} of ${b.limit}</small></${small ? 'span' : 'button'}>`;
+    /* lights: orange = past the 60 / 90 days, red slow blink = less than 7 days left, yellow = running */
+    const lc = b.left < 0 ? 'o' : b.left < 7 ? 'r' : 'y';
+    return `<${small ? 'span' : 'button'} class="bn-due ${b.left < 0 ? 'over' : ''} bl-${lc} ${small ? 'sm' : ''}" ${small ? '' : 'data-bn'} title="${esc(t + (lc === 'r' ? ' Less than 7 days left – complete the investigation now.' : lc === 'o' ? ' Time limit crossed.' : ''))}"><i class="bn-dot ${lc}"></i>${small ? '' : '<b>CS / FR Due:</b> '}${b.left >= 0 ? `${b.left} Days Left` : `Overdue ${-b.left} Days`}<small>Day ${Math.max(0, b.el)} of ${b.limit}</small></${small ? 'span' : 'button'}>`;
   },
   bnEdit(c) {
     const b = this.bn(c) || {};
@@ -14904,12 +14956,12 @@ const CCTNS = {
     const c = activeCase(); if (!c) return; const f = c.final && c.final.type === type ? c.final : { type, date: new Date().toISOString().slice(0, 10), sections: c.section || '' }, cs = type !== 'FR', nm = type === 'PPI' ? 'CS-PPI' : type;
     const b = UI.modal(this.FIN[type][0] + ' ' + this.FIN[type][1], `<p class="small muted">Case <b>${esc(c.name || '')}</b>${c.fir ? ' · FIR ' + esc(c.fir) : ''}. Saving marks the case as ${type === 'PPI' ? 'charge-sheeted with further investigation pending (Sec 193(9) BNSS)' : cs ? 'charge-sheeted' : 'closed with a final report'} (it moves out of Pending cases).${c.final && c.final.type !== type ? ` <b class="bad-t">This replaces the ${c.final.type} already recorded.</b>` : ''}</p>
       <div class="map-grid"><label>${nm} No.<input id="fnNo" value="${esc(f.no || '')}" placeholder="e.g. ${cs ? '12/2026' : 'FR 03/2026'}"></label><label>Date<input id="fnD" type="date" value="${esc(f.date || '')}"></label>
-      <label>Court<input id="fnCt" value="${esc(f.court || '')}" placeholder="e.g. CJM Ghaziabad"></label>${cs ? `<label>Sections<input id="fnSec" value="${esc(f.sections || '')}"></label><label>Accused charge-sheeted<input id="fnAc" value="${esc(f.accused || '')}" placeholder="names / count"></label>${type === 'PPI' ? `<label style="grid-column:1/-1">Further investigation pending on<input id="fnPpi" value="${esc(f.ppi || '')}" placeholder="e.g. absconding accused, bank / TSP replies awaited"></label>` : ''}` : `<label>FR type<select id="fnT">${this.FRT.map(t => `<option ${t === f.frType ? 'selected' : ''}>${t}</option>`).join('')}</select></label>`}
+      <label>Court<input id="fnCt" value="${esc(f.court || '')}" placeholder="e.g. CJM Ghaziabad"></label>${cs ? `<label>Sections<input id="fnSec" value="${esc(f.sections || '')}"></label><label>Accused charge-sheeted<input id="fnAc" value="${esc(f.accused || '')}" placeholder="names / count"></label>${type === 'PPI' ? `<label style="grid-column:1/-1">Further investigation pending on<input id="fnPpi" value="${esc(f.ppi || '')}" placeholder="e.g. absconding accused, bank / TSP replies awaited"></label><label>Total Targets / Suspects<input id="fnPt" type="number" min="0" value="${esc(f.ppiTot || '')}" placeholder="e.g. 10"></label><label>Action Taken Against<input id="fnPd" type="number" min="0" value="${esc(f.ppiDone || '')}" placeholder="e.g. 5"></label>` : ''}` : `<label>FR type<select id="fnT">${this.FRT.map(t => `<option ${t === f.frType ? 'selected' : ''}>${t}</option>`).join('')}</select></label>`}
       <label style="grid-column:1/-1">Note<input id="fnNote" value="${esc(f.note || '')}"></label></div>`,
       [...(c.final && c.final.type === type ? [{ label: 'Remove ' + nm, cls: 'danger', onClick: async () => { if (!UI.confirm(`Remove the ${nm} record? The case goes back to Under investigation.`)) return; delete c.final; c.status = 'Under investigation'; await saveMeta(); UI.closeModal(); render(); } }] : []),
        { label: 'Cancel', onClick: UI.closeModal }, { label: 'Save ' + nm, cls: 'primary', onClick: async () => {
         const v = i => { const e = $(i, b); return e ? e.value.trim() : ''; };
-        c.final = { type, no: v('#fnNo'), date: v('#fnD'), court: v('#fnCt'), sections: v('#fnSec'), accused: v('#fnAc'), frType: v('#fnT'), ppi: v('#fnPpi'), note: v('#fnNote'), at: new Date().toISOString() };
+        c.final = { type, no: v('#fnNo'), date: v('#fnD'), court: v('#fnCt'), sections: v('#fnSec'), accused: v('#fnAc'), frType: v('#fnT'), ppi: v('#fnPpi'), ppiTot: v('#fnPt'), ppiDone: v('#fnPd'), note: v('#fnNote'), at: new Date().toISOString() };
         c.status = type === 'PPI' ? 'Charge-sheet filed (PPI)' : cs ? 'Charge-sheet filed' : 'Final report filed'; await saveMeta(); typeof fillCaseSel === 'function' && fillCaseSel(); UI.closeModal(); UI.toast(`${nm} recorded – case marked ${c.status}`); render(); } }]);
   },
   docUpload() {
@@ -15684,7 +15736,7 @@ const Hub = {
     if (b0 && $('.hub-f', b0)) s.form = CaseBox.read($('.hub-f', b0));
     let c = isNew ? { year: String(new Date().getFullYear()), ps: activeCase().ps || '', district: activeCase().district || '', state: activeCase().state || 'UP – Uttar Pradesh', io: activeCase().io || '', io_mobile: activeCase().io_mobile || '', io_posting: activeCase().io_posting || '' } : S.cases.find(x => x.id === s.sel) || activeCase();
     const F = CaseBox.F, open = isNew || s.edit; if (s.form) Object.assign(c = { ...c }, s.form);
-    const bits = [c.fir && 'FIR ' + String(c.fir).replace(/^\s*FIR\s*(No\.?)?\s*/i, ''), c.ps && 'PS ' + c.ps, c.district, c.section, c.io && 'IO ' + c.io].filter(Boolean);
+    const bits = [c.fir && 'FIR ' + String(c.fir).replace(/^\s*FIR\s*(No\.?)?\s*/i, ''), c.ps && 'PS ' + c.ps, c.district, c.section, c.io && CaseBox.role(c) + ' ' + c.io].filter(Boolean);
     const html = `<div class="hub ti">
       <div class="ti-step"><b>1</b> Which case are these files for?</div>
       ${this.ask(ACK)}<div class="ti-seg hub-seg hub-seg4"><button data-hm="new" class="${isNew && !isN ? 'on' : ''}">➕ New FIR Case<small>Fill FIR, Police Station, IO details</small></button><button data-hm="ncrp" class="${isN ? 'on' : ''}">🧾 New NCRP Case<small>No FIR yet – by Acknowledgement No.</small></button><button data-hm="old" class="${s.mode === 'old' ? 'on' : ''}">📁 Existing Case<small>Add the files to a case already made</small></button><button data-hm="auto" class="${isAuto ? 'on' : ''}">🧭 Auto By FIR<small>CCTNS zips / folders of many FIRs – each goes to its own case</small></button></div>
@@ -15741,7 +15793,7 @@ const Hub = {
     $$('[data-hm]', m).forEach(b => b.onclick = () => { if (s.busy) return; s.picked = 1; s.mode = b.dataset.hm; s.edit = false; s.form = null; this.draw(); });
     const cs = $('#hbCase', m); if (cs) cs.onchange = () => { s.picked = 1; s.sel = cs.value; s.edit = false; s.form = null; this.draw(); };
     const ed = $('#hbEd', m); if (ed) ed.onclick = () => { s.edit = !s.edit; s.form = null; this.draw(); };
-    CaseBox.wire(m); m.addEventListener('input', () => { const e = $('#hbErr', m); if (e) e.textContent = ''; });
+    CaseBox.wire(m, s.mode === 'old' ? S.cases.find(x => x.id === s.sel) : null); m.addEventListener('input', () => { const e = $('#hbErr', m); if (e) e.textContent = ''; });
     const pick = dir => { const i = document.createElement('input'); i.type = 'file'; i.multiple = true; i.className = 'hidden'; if (dir) { i.webkitdirectory = true; i.setAttribute('directory', ''); } i.onchange = () => { const f = [...i.files]; i.remove(); this.add(f); }; document.body.appendChild(i); i.click(); };
     $('#hbF', m).onclick = e => { e.stopPropagation(); pick(false); }; $('#hbD', m).onclick = e => { e.stopPropagation(); pick(true); };
     const drop = $('#hbDrop', m);
@@ -16045,15 +16097,22 @@ const AllMode = {
   label(sc) { const x = this.SC[sc] || this.SC.__all; return `${x[1]} (${this.list(sc).length})`; },
   pick() { const L = this.on() ? this.list() : S.cases, ok = id => id && L.some(c => c.id === id); return ok(S.prevCase) ? S.prevCase : ((L[0] || S.cases[0] || {}).id); },
   ackOf: c => String(c.ack || '').split(/[,;\s]+/).filter(Boolean),
-  caseLabel(c) { const a = this.ackOf(c); return `${c.name || ''}${c.fir && !String(c.name).includes(c.fir) ? ' · ' + c.fir : ''}${!c.fir && a.length && !String(c.name).includes(a[0]) ? ' · Ack ' + a[0] + (a.length > 1 ? ' +' + (a.length - 1) : '') : ''}`; },
+  /* FIR number first (Vijay 14-11: "FIR 0007/2026 …"), then the case name; NCRP cases start with the Ack No. */
+  caseLabel(c) {
+    const a = this.ackOf(c), fir = String(c.fir || '').trim(), nm = String(c.name || '').trim();
+    const head = fir ? (/^fir\b/i.test(fir) ? fir : 'FIR ' + fir) : a.length ? 'Ack ' + a[0] + (a.length > 1 ? ' +' + (a.length - 1) : '') : '';
+    const rest = nm.replace(fir ? new RegExp('\\s*[·\\-–,]?\\s*(FIR\\s*(No\\.?)?\\s*)?' + fir.replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&') + '\\s*[·\\-–,]?\\s*', 'i') : /^$/, ' ').trim();
+    return head ? head + (rest ? ' · ' + rest : '') : nm;
+  },
   options() {
     const F = S.cases.filter(c => this.cat(c) === 'fir'), N = S.cases.filter(c => this.cat(c) === 'ncrp'), o = (v, t) => `<option value="${v}" ${S.caseId === v ? 'selected' : ''}>${esc(t)}</option>`;
     let h = '';
-    if (S.cases.length > 1) h += o('__all', `🗂 All Cases (${S.cases.length})`);
+    if (S.cases.length) h += o('__all', `🗂 All Cases Data (${S.cases.length})`);
     if (S.cases.length > 1 && F.length) h += o('__fir', `📁 FIR Cases (${F.length})`);
     if (S.cases.length > 1 && N.length) h += o('__ncrp', `🧾 NCRP (Without FIR) (${N.length})`);
     const grp = (l, L) => L.length ? (h ? `<optgroup label="${esc(l)}">` : '') + L.map(c => o(c.id, this.caseLabel(c))).join('') + (h ? '</optgroup>' : '') : '';
-    return h + grp(`📄 One Case – FIR (${F.length})`, F) + grp(`📄 One Case – NCRP Without FIR (${N.length})`, N);
+    const by = L => L.slice().sort((x, y) => String(x.fir || x.ack || x.name).localeCompare(String(y.fir || y.ack || y.name), 'en', { numeric: true }));
+    return h + grp(`📄 Particular Case – FIR (${F.length})`, by(F)) + grp(`📄 Particular Case – NCRP Without FIR (${N.length})`, by(N));
   },
   /* All / FIR / NCRP open at once: the Dashboard works from saved summaries while the rows of every case
      are joined in the background; the joined data is kept until a case changes */
@@ -16179,7 +16238,7 @@ const OneFile = {
       (comps.length ? `<h4>🧾 NCRP Complaints (Acknowledgement No.)</h4>` + ncrpT : ''), isN ? acks.length + ' Ack No.' : (f.no || c.fir ? 'FIR ' + (f.no || c.fir) : ''));
     /* 2 · case details */
     const cnt = [['Complaints', comps.length || (d.ncrp || []).length], ['Transactions', (d.txns || []).length], ['KYC Records', (d.kyc || []).length], ['Social Media Records', (d.social || []).length], ['CAF', (d.caf || []).length], ['Telecom Records', ((d.tele || d.cdr || [])).length || ''], ['Notes', (d.notes || []).length], ['Tasks', (d.tasks || []).length], ['Identifiers', ids.length]].filter(x => x[1]);
-    h += this.sec(++n, '🗂', 'Case Details', `<div class="g2"><div>${this.kv([['Case Name', c.name || ''], ['Case Type', c.ctype || ''], ['Category', isN ? 'NCRP – no FIR yet' : 'FIR case'], ['Police Station', c.ps || ''], ['District', c.district || ''], ['State', c.state || ''], ['IO Name', c.io || (r && r.io) || ''], ['IO Mobile', c.io_mobile || ''], ['IO Posting', c.io_posting || ''], ['Status', fin], ['Accused (Charge-Sheeted)', r && r.acc.cs.length ? r.acc.cs.join(', ') : ''], ['Created', c.created ? new Date(c.created).toLocaleDateString('en-IN') : '']])}</div>
+    h += this.sec(++n, '🗂', 'Case Details', `<div class="g2"><div>${this.kv([['Case Name', c.name || ''], ['Case Type', c.ctype || ''], ['Category', isN ? 'NCRP – no FIR yet' : 'FIR case'], ['Police Station', c.ps || ''], ['District', c.district || ''], ['State', c.state || ''], [(isN ? 'EO' : 'IO') + ' Name', c.io || (r && r.io) || ''], [(isN ? 'EO' : 'IO') + ' Mobile', c.io_mobile || ''], [(isN ? 'EO' : 'IO') + ' Posting', c.io_posting || ''], ['Status', fin], ['Accused (Charge-Sheeted)', r && r.acc.cs.length ? r.acc.cs.join(', ') : ''], ['Created', c.created ? new Date(c.created).toLocaleDateString('en-IN') : '']])}</div>
       <div><h4>📦 Data In This Case</h4>${this.kv(cnt.map(([k, v]) => [k, fmtNum(v)]))}<h4>💰 Money</h4>${this.kv([['Amount Defrauded', amount ? fmtINR(amount) : ''], ['On Hold / Lien', hold ? fmtINR(hold) : ''], ['Accounts In Trail', acc.length ? fmtNum(acc.length) : ''], ['Mule Accounts (≥60)', mule.length ? fmtNum(mule.length) : ''], ['Layers', comps.length ? Math.max(0, ...comps.map(x => x.layers || 0)) || '' : '']])}</div></div>`);
     /* 3 · what to do */
     const top = acc.slice().sort((a, b) => b.score - a.score || b.inAmt - a.inAmt).slice(0, 10);

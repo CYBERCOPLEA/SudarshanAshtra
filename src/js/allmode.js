@@ -10,15 +10,22 @@ const AllMode = {
   label(sc) { const x = this.SC[sc] || this.SC.__all; return `${x[1]} (${this.list(sc).length})`; },
   pick() { const L = this.on() ? this.list() : S.cases, ok = id => id && L.some(c => c.id === id); return ok(S.prevCase) ? S.prevCase : ((L[0] || S.cases[0] || {}).id); },
   ackOf: c => String(c.ack || '').split(/[,;\s]+/).filter(Boolean),
-  caseLabel(c) { const a = this.ackOf(c); return `${c.name || ''}${c.fir && !String(c.name).includes(c.fir) ? ' · ' + c.fir : ''}${!c.fir && a.length && !String(c.name).includes(a[0]) ? ' · Ack ' + a[0] + (a.length > 1 ? ' +' + (a.length - 1) : '') : ''}`; },
+  /* FIR number first (Vijay 14-11: "FIR 0007/2026 …"), then the case name; NCRP cases start with the Ack No. */
+  caseLabel(c) {
+    const a = this.ackOf(c), fir = String(c.fir || '').trim(), nm = String(c.name || '').trim();
+    const head = fir ? (/^fir\b/i.test(fir) ? fir : 'FIR ' + fir) : a.length ? 'Ack ' + a[0] + (a.length > 1 ? ' +' + (a.length - 1) : '') : '';
+    const rest = nm.replace(fir ? new RegExp('\\s*[·\\-–,]?\\s*(FIR\\s*(No\\.?)?\\s*)?' + fir.replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&') + '\\s*[·\\-–,]?\\s*', 'i') : /^$/, ' ').trim();
+    return head ? head + (rest ? ' · ' + rest : '') : nm;
+  },
   options() {
     const F = S.cases.filter(c => this.cat(c) === 'fir'), N = S.cases.filter(c => this.cat(c) === 'ncrp'), o = (v, t) => `<option value="${v}" ${S.caseId === v ? 'selected' : ''}>${esc(t)}</option>`;
     let h = '';
-    if (S.cases.length > 1) h += o('__all', `🗂 All Cases (${S.cases.length})`);
+    if (S.cases.length) h += o('__all', `🗂 All Cases Data (${S.cases.length})`);
     if (S.cases.length > 1 && F.length) h += o('__fir', `📁 FIR Cases (${F.length})`);
     if (S.cases.length > 1 && N.length) h += o('__ncrp', `🧾 NCRP (Without FIR) (${N.length})`);
     const grp = (l, L) => L.length ? (h ? `<optgroup label="${esc(l)}">` : '') + L.map(c => o(c.id, this.caseLabel(c))).join('') + (h ? '</optgroup>' : '') : '';
-    return h + grp(`📄 One Case – FIR (${F.length})`, F) + grp(`📄 One Case – NCRP Without FIR (${N.length})`, N);
+    const by = L => L.slice().sort((x, y) => String(x.fir || x.ack || x.name).localeCompare(String(y.fir || y.ack || y.name), 'en', { numeric: true }));
+    return h + grp(`📄 Particular Case – FIR (${F.length})`, by(F)) + grp(`📄 Particular Case – NCRP Without FIR (${N.length})`, by(N));
   },
   /* All / FIR / NCRP open at once: the Dashboard works from saved summaries while the rows of every case
      are joined in the background; the joined data is kept until a case changes */
