@@ -83,7 +83,7 @@ const Reports = {
     const xl = Analysis.crossLinks().filter(x => x.sections >= 2 || x.refs >= 2).sort((a, b) => b.sections - a.sections || b.refs - a.refs);
     const socC = ['mobile', 'email', 'imei', 'ip'].map(f => [f, Analysis.socCommon(f).filter(g => g.profiles >= 2)]).filter(x => x[1].length);
     const html = `<h1>Case Analysis Report</h1><div class="muted">Generated ${new Date().toLocaleString('en-IN')} · SudarshanAshtra</div>
-      <h2>Case details</h2><table>${[['Case', c.name], ['FIR / Case No', c.fir], ['Sections', c.section], ['Police Station', c.ps], ['Police Commissionerate', juris(c.district)], ['IO', [c.io, c.io_rank].filter(Boolean).join(', ')], ['NCRP Ack', c.ack], ['Status', c.status], ['Brief facts', c.desc]].filter(r => r[1]).map(r => `<tr><th style="width:180px">${r[0]}</th><td style="white-space:pre-wrap">${esc(r[1])}</td></tr>`).join('')}</table>
+      <h2>Case details</h2><table>${[['Case', c.name], ['FIR / Case No', c.fir], ['Sections', c.section], ['Police Station', c.ps], ['Police Commissionerate', juris(c.district)], [CaseBox.role(c), [c.io, c.io_rank].filter(Boolean).join(', ')], ['NCRP Ack', c.ack], ['Status', c.status], ['Brief facts', c.desc]].filter(r => r[1]).map(r => `<tr><th style="width:180px">${r[0]}</th><td style="white-space:pre-wrap">${esc(r[1])}</td></tr>`).join('')}</table>
       <h2>Summary</h2>${[['Complaints', d.ncrp.length], ['Reported loss', fmtINR(sum(d.ncrp, r => r.amount))], ['Transactions analysed', d.txns.length], ['Accounts in trail', acc.length], ['Max layer', Math.max(0, ...acc.map(a => a.layer))], ['Amount on hold', fmtINR(sum(acc, a => a.hold))], ['High-risk accounts', acc.filter(a => a.score >= 60).length], ['Social profiles', d.social.length]].map(k => `<span class="kp">${k[0]}<b>${k[1]}</b></span>`).join('')}
       ${d.ncrp.length ? '<h2>NCRP complaints</h2>' + this.tbl([['ack_no', 'Ack No'], ['date', 'Date'], ['victim_name', 'Victim'], ['district', 'District'], ['category', 'Category'], ['amount', 'Amount', fmtINR], ['hold_amount', 'Hold', fmtINR], ['status', 'Status']], d.ncrp) : ''}
       ${svg ? '<h2>Money trail flow chart</h2>' + svg : ''}
@@ -139,7 +139,7 @@ function render() {
 function applyTheme() { document.documentElement.dataset.theme = S.settings.theme === 'light' ? 'light' : 'dark'; try { DocFont.apply(); } catch (e) { } }
 
 /* ---------- Cases ---------- */
-function fillCaseSel() { if (typeof AllMode !== 'undefined') { $('#caseSel').innerHTML = AllMode.options(); return; } $('#caseSel').innerHTML = S.cases.map(c => `<option value="${c.id}" ${c.id === S.caseId ? 'selected' : ''}>${esc(c.name)}${c.fir ? ' · ' + esc(c.fir) : ''}</option>`).join(''); }
+function fillCaseSel() { if (typeof AllMode !== 'undefined') { const cs = $('#caseSel'); cs.innerHTML = AllMode.options(); const so = cs.options[cs.selectedIndex]; cs.title = so ? so.textContent : ''; return; } $('#caseSel').innerHTML = S.cases.map(c => `<option value="${c.id}" ${c.id === S.caseId ? 'selected' : ''}>${esc(c.name)}${c.fir ? ' · ' + esc(c.fir) : ''}</option>`).join(''); }
 async function switchCase(id) {
   if (S.caseId && S.data && !isScope(S.caseId)) { clearTimeout(saveTimer); DB.set('case:' + S.caseId, S.data).catch(e => console.warn('save', e)); }   // saved in the background – reads of that case wait for it
   if (S.caseId && !isScope(S.caseId)) S.prevCase = S.caseId;
@@ -155,13 +155,21 @@ async function newCase(name) {
 /* ---------- Case box: one form to select / create a case and fill its main details (used on Dashboard and top bar) ---------- */
 const CaseBox = {
   F: [['ctype', 'Case Type', 'ct'], ['fir', 'FIR No.'], ['year', 'Year'], ['ps', 'Police Station'], ['district', 'District / Commissionerate'], ['state', 'State', 'st'], ['io', 'IO Name'], ['io_mobile', 'IO Mobile'], ['io_posting', 'IO Posting'], ['section', 'Sections of law']],
+  /* NCRP case (no FIR yet): primary enquiry is by the EO; once the FIR No. is filled the IO takes over (Vijay 14-11) */
+  role(c) { c = c || {}; const noFir = !String(c.fir || '').trim(); return noFir && (c.id || AllMode.ackOf(c).length || /ncrp|without fir/i.test(c.ctype || '')) ? 'EO' : 'IO'; },
+  lbl(l, c) { return String(l).replace(/^IO\b/, this.role(c)); },
   states() { try { return Off.INST; } catch (e) { return []; } },
   types() { try { return Off.ctList(); } catch (e) { return ['Investment Fraud', 'Mobile Hacking (APK)', 'Social Media']; } },
   yearOf(c) { return c.year || ((String(c.fir || '').match(/\/\s*(20\d\d)\b/) || [])[1]) || ''; },
   autoName(o) { const f = String(o.fir || '').replace(/^\s*FIR\s*(No\.?)?\s*/i, ''); return [o.ctype || 'Case', f ? 'FIR ' + f + (o.year && !f.includes(o.year) ? '/' + o.year : '') : ''].filter(Boolean).join(' · '); },
   field(k, l, t, v) { const opts = (L, add) => `<option value="">— select —</option>${[...L, ...(v && !L.includes(v) ? [v] : [])].map(s => `<option ${s === v ? 'selected' : ''}>${esc(s)}</option>`).join('')}${add ? '<option value="__new">➕ Add new…</option>' : ''}`;
-    return `<label>${l}${t === 'ct' ? `<select data-cb="${k}">${opts(this.types(), true)}</select>` : t === 'st' ? `<select data-cb="${k}">${opts(this.states())}</select>` : `<input data-cb="${k}" value="${esc(v || '')}"${k === 'year' ? ' inputmode="numeric" maxlength="4"' : k === 'io_mobile' ? ' inputmode="tel" maxlength="14"' : ''}>`}</label>`; },
-  wire(box) { const ct = $('[data-cb="ctype"]', box); if (ct) ct.onchange = () => { if (ct.value !== '__new') return; const n = (prompt('New case type:') || '').trim(); if (!n) { ct.value = ''; return; } try { const L = Off.ctList(); if (!L.includes(n)) { L.push(n); EditList.save('cd-ctype', L); } } catch (e) { } ct.insertAdjacentHTML('afterbegin', `<option>${esc(n)}</option>`); ct.value = n; }; },
+    return `<label>${/^IO\b/.test(l) ? `<span data-iol="${esc(l.slice(2))}">${esc(l)}</span>` : l}${t === 'ct' ? `<select data-cb="${k}">${opts(this.types(), true)}</select>` : t === 'st' ? `<select data-cb="${k}">${opts(this.states())}</select>` : `<input data-cb="${k}" value="${esc(v || '')}"${k === 'year' ? ' inputmode="numeric" maxlength="4"' : k === 'io_mobile' ? ' inputmode="tel" maxlength="14"' : ''}>`}</label>`; },
+  wire(box, c0) {
+    box._iou = () => { const v = k => { const i = $(`[data-cb="${k}"]`, box); return i ? i.value : (c0 || {})[k]; }, ak = $('[data-cb="ack"]', box);
+      const R = this.role({ id: c0 && c0.id, fir: v('fir'), ctype: v('ctype'), ack: ak ? (ak.value || 'x') : (c0 || {}).ack }); $$('[data-iol]', box).forEach(s => s.textContent = R + s.dataset.iol); };
+    if (!box._iow) { box._iow = 1; ['input', 'change'].forEach(ev => box.addEventListener(ev, e => { if (e.target.matches && e.target.matches('[data-cb="fir"],[data-cb="ctype"],[data-cb="ack"]') && box._iou) box._iou(); })); }
+    box._iou();
+    const ct = $('[data-cb="ctype"]', box); if (ct) ct.onchange = () => { if (ct.value !== '__new') return; const n = (prompt('New case type:') || '').trim(); if (!n) { ct.value = ''; return; } try { const L = Off.ctList(); if (!L.includes(n)) { L.push(n); EditList.save('cd-ctype', L); } } catch (e) { } ct.insertAdjacentHTML('afterbegin', `<option>${esc(n)}</option>`); ct.value = n; }; },
   read(box) { const o = {}; $$('[data-cb]', box).forEach(i => o[i.dataset.cb] = i.value === '__new' ? '' : i.value.trim()); return o; },
   check(o) { const E = [['FIR No.', VCK('case', o.fir, /ncrp|without fir/i.test(o.ctype || '') ? 'NCRP' : '')], ['Year', VCK('year', o.year)], ['IO Mobile', VCK('mobile', o.io_mobile)]].filter(x => x[1]);
     if (E.length) Valid.pop(E.map(x => ({ where: x[0], msg: x[1] }))); return E.map(x => x[0] + ': ' + x[1]).join(' · '); },
@@ -172,7 +180,7 @@ const CaseBox = {
       const m = UI.modal(sel === 'new' ? '➕ New case' : '📁 Case details', `<div class="ip-case cbm"><div class="ip-hd cbm-hd"><span class="ip-ic">${sel === 'new' ? '➕' : '📁'}</span><b>${sel === 'new' ? 'Create new case' : 'Case details'}</b><span class="ip-st">${sel === 'new' ? 'Fill the details and press <b>Save</b>' : esc(c.name || '')}</span></div><div class="cbm-in"><div class="cb-sel"><label>Select case<select id="cbSel"><option value="new" ${sel === 'new' ? 'selected' : ''}>➕ New case</option>${S.cases.map(x => `<option value="${x.id}" ${x.id === sel ? 'selected' : ''}>${esc(x.name)}${x.fir ? ' · ' + esc(x.fir) : ''}</option>`).join('')}</select></label></div>
         <div class="map-grid cb-grid">${this.F.map(([k, l, t]) => this.field(k, l, t, k === 'year' ? this.yearOf(c) : c[k])).join('')}<label style="grid-column:1/-1">Case name <span class="small muted">(blank = made from Case Type and FIR)</span><input data-cb="name" value="${esc(sel === 'new' ? '' : c.name || '')}" placeholder="${esc(this.autoName(c))}"></label></div><div class="small" id="cbErr" style="color:var(--bad);min-height:1.2em"></div></div></div>`,
         [{ label: 'Close', onClick: UI.closeModal }, { label: sel === 'new' ? '💾 Save new case' : '💾 Save', cls: 'primary', onClick: () => this.save(sel, m) }]);
-      this.wire(m); $('#cbSel', m).onchange = e => { sel = e.target.value; draw(); }; };
+      this.wire(m, sel === 'new' ? null : c); $('#cbSel', m).onchange = e => { sel = e.target.value; draw(); }; };
     draw();
   },
   async save(sel, box) { const o = this.read(box), err = this.check(o); if (err) { $('#cbErr', box).textContent = err; return; }
@@ -187,7 +195,7 @@ const CaseBox = {
   _ms: { q: '', t: '', st: '', y: '', sort: 'created', dir: -1 },
   manager() {
     const st = this._ms, V = (c, k) => k === 'year' ? this.yearOf(c) : k === 'status' ? (c.status || 'Under investigation') : (c[k] || '');
-    const COLS = [['ctype', 'Case Type'], ['fir', 'FIR No.'], ['year', 'Year'], ['ps', 'Police Station'], ['district', 'District / Commissionerate'], ['state', 'State'], ['io', 'IO Name'], ['io_mobile', 'IO Mobile'], ['io_posting', 'IO Posting'], ['section', 'Sections'], ['status', 'Status']];
+    const COLS = [['ctype', 'Case Type'], ['fir', 'FIR No.'], ['year', 'Year'], ['ps', 'Police Station'], ['district', 'District / Commissionerate'], ['state', 'State'], ['io', 'IO / EO Name'], ['io_mobile', 'IO / EO Mobile'], ['io_posting', 'IO / EO Posting'], ['section', 'Sections'], ['status', 'Status']];
     const done = c => typeof CaseStat !== 'undefined' ? CaseStat.done(c) : /complet/i.test(c.status || '');
     const body = UI.drawer('📁 All cases', '<div id="cmW"></div>'); $('#drawer').classList.add('dx-wide');
     const draw = () => { const A = S.cases, q = st.q.toLowerCase();
@@ -216,10 +224,10 @@ const CaseBox = {
   strip(el) { const c = activeCase(), V = k => k === 'year' ? this.yearOf(c) : c[k];
     const filled = this.F.filter(([k]) => V(k)).length;
     el.innerHTML = `<div class="cb-strip"><div class="cb-hd"><span class="cb-ic">📁</span><b>Case details</b><span class="cb-sub">${esc(c.name || '')}</span><span class="grow"></span><button class="btn sm cb-b" id="cbAll" title="See and edit all cases line by line">📋 All cases (${S.cases.length})</button><button class="btn sm cb-b" id="cbEd">✏ Edit</button><button class="btn sm cb-b" id="cbNew" title="New case">➕</button><button class="btn sm cb-b cb-x" id="cbDel" title="Delete this case">➖</button><span class="cb-big">${filled}/${this.F.length}<small>fields filled</small></span></div>
-      <div class="cb-chips">${this.F.map(([k, l]) => `<div class="cb-chip ${V(k) ? '' : 'empty'}"><span>${l}</span><b>${esc(V(k) || '—')}</b></div>`).join('')}</div></div>`;
+      <div class="cb-chips">${this.F.map(([k, l]) => `<div class="cb-chip ${V(k) ? '' : 'empty'}"><span>${this.lbl(l, c)}</span><b>${esc(V(k) || '—')}</b></div>`).join('')}</div></div>`;
     $('#cbNew', el).onclick = () => this.open('new'); $('#cbAll', el).onclick = () => this.manager(); $('#cbDel', el).onclick = () => deleteCase(c.id);
     $('#cbEd', el).onclick = () => { $('.cb-chips', el).outerHTML = `<div class="map-grid cb-grid cb-inl">${this.F.map(([k, l, t]) => this.field(k, l, t, V(k))).join('')}</div><div class="row" style="gap:6px;margin-top:8px;align-items:center"><button class="btn primary sm" id="cbSv">💾 Save</button><button class="btn sm" id="cbCx">Cancel</button><span class="small" id="cbErr" style="color:var(--bad)"></span></div>`;
-      $('#cbEd', el).style.display = 'none'; this.wire(el);
+      $('#cbEd', el).style.display = 'none'; this.wire(el, c);
       $('#cbCx', el).onclick = () => this.strip(el);
       $('#cbSv', el).onclick = async () => { const o = this.read(el), err = this.check(o); if (err) return $('#cbErr', el).textContent = err; const auto = !c.name || c.name === this.autoName(c) || /^Case \d+$/.test(c.name); Object.assign(c, o); if (auto) c.name = this.autoName(c); await saveMeta(); fillCaseSel(); render(); UI.toast('Case details saved'); }; };
   }

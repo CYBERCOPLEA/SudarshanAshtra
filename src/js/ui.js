@@ -168,7 +168,7 @@ function openImport(allowed, onDone, presetFiles) {
   const box = $('.ip-case', body); let sel = isScope(S.caseId) ? (S.prevCase && S.cases.some(x => x.id === S.prevCase) ? S.prevCase : S.cases[0].id) : S.caseId, editing = false;
   const fillSel = () => { $('#ipCase', body).innerHTML = S.cases.map(x => `<option value="${x.id}" ${x.id === sel ? 'selected' : ''}>${esc(x.fir ? x.fir + ' – ' + x.name : x.name)}</option>`).join('') + `<option value="new" ${sel === 'new' ? 'selected' : ''}>➕ New case (type FIR / Complaint No. below)</option>`; };
   const drawF = () => { const c = sel === 'new' ? { year: String(new Date().getFullYear()), ps: activeCase().ps || '', district: activeCase().district || '' } : S.cases.find(x => x.id === sel) || {}, open = editing || sel === 'new';
-    $('#ipF', body).innerHTML = IF.map(([k, l, t]) => CaseBox.field(k, l, t, k === 'year' ? CaseBox.yearOf(c) : c[k])).join(''); CaseBox.wire(box);
+    $('#ipF', body).innerHTML = IF.map(([k, l, t]) => CaseBox.field(k, l, t, k === 'year' ? CaseBox.yearOf(c) : c[k])).join(''); CaseBox.wire(box, sel === 'new' ? null : c);
     $$('#ipF [data-cb]', body).forEach(i => i.disabled = !open); box.classList.toggle('ip-open', open);
     $('#ipEd', body).textContent = editing ? '✖ Cancel edit' : '✏ Edit'; $('#ipEd', body).disabled = sel === 'new'; $('#ipDel', body).disabled = sel === 'new';
     $('#ipSt', body).innerHTML = sel === 'new' ? 'New case – fill the details and press <b>OK</b>' : `Files go into: <b>${esc(c.name || '')}</b>${sel === S.caseId ? ' (open now)' : ' – press OK to open it'}`; $('#ipErr', body).textContent = ''; };

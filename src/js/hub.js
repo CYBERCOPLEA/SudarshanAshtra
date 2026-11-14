@@ -26,7 +26,7 @@ const Hub = {
     if (b0 && $('.hub-f', b0)) s.form = CaseBox.read($('.hub-f', b0));
     let c = isNew ? { year: String(new Date().getFullYear()), ps: activeCase().ps || '', district: activeCase().district || '', state: activeCase().state || 'UP – Uttar Pradesh', io: activeCase().io || '', io_mobile: activeCase().io_mobile || '', io_posting: activeCase().io_posting || '' } : S.cases.find(x => x.id === s.sel) || activeCase();
     const F = CaseBox.F, open = isNew || s.edit; if (s.form) Object.assign(c = { ...c }, s.form);
-    const bits = [c.fir && 'FIR ' + String(c.fir).replace(/^\s*FIR\s*(No\.?)?\s*/i, ''), c.ps && 'PS ' + c.ps, c.district, c.section, c.io && 'IO ' + c.io].filter(Boolean);
+    const bits = [c.fir && 'FIR ' + String(c.fir).replace(/^\s*FIR\s*(No\.?)?\s*/i, ''), c.ps && 'PS ' + c.ps, c.district, c.section, c.io && CaseBox.role(c) + ' ' + c.io].filter(Boolean);
     const html = `<div class="hub ti">
       <div class="ti-step"><b>1</b> Which case are these files for?</div>
       ${this.ask(ACK)}<div class="ti-seg hub-seg hub-seg4"><button data-hm="new" class="${isNew && !isN ? 'on' : ''}">➕ New FIR Case<small>Fill FIR, Police Station, IO details</small></button><button data-hm="ncrp" class="${isN ? 'on' : ''}">🧾 New NCRP Case<small>No FIR yet – by Acknowledgement No.</small></button><button data-hm="old" class="${s.mode === 'old' ? 'on' : ''}">📁 Existing Case<small>Add the files to a case already made</small></button><button data-hm="auto" class="${isAuto ? 'on' : ''}">🧭 Auto By FIR<small>CCTNS zips / folders of many FIRs – each goes to its own case</small></button></div>
@@ -83,7 +83,7 @@ const Hub = {
     $$('[data-hm]', m).forEach(b => b.onclick = () => { if (s.busy) return; s.picked = 1; s.mode = b.dataset.hm; s.edit = false; s.form = null; this.draw(); });
     const cs = $('#hbCase', m); if (cs) cs.onchange = () => { s.picked = 1; s.sel = cs.value; s.edit = false; s.form = null; this.draw(); };
     const ed = $('#hbEd', m); if (ed) ed.onclick = () => { s.edit = !s.edit; s.form = null; this.draw(); };
-    CaseBox.wire(m); m.addEventListener('input', () => { const e = $('#hbErr', m); if (e) e.textContent = ''; });
+    CaseBox.wire(m, s.mode === 'old' ? S.cases.find(x => x.id === s.sel) : null); m.addEventListener('input', () => { const e = $('#hbErr', m); if (e) e.textContent = ''; });
     const pick = dir => { const i = document.createElement('input'); i.type = 'file'; i.multiple = true; i.className = 'hidden'; if (dir) { i.webkitdirectory = true; i.setAttribute('directory', ''); } i.onchange = () => { const f = [...i.files]; i.remove(); this.add(f); }; document.body.appendChild(i); i.click(); };
     $('#hbF', m).onclick = e => { e.stopPropagation(); pick(false); }; $('#hbD', m).onclick = e => { e.stopPropagation(); pick(true); };
     const drop = $('#hbDrop', m);
