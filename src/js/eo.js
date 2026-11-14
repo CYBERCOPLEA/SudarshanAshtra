@@ -35,24 +35,28 @@ const EO = {
         <span class="eo-who" id="eoWho" title="Enquiry Officer – shown on the report">👮 EO: <b>${esc(C.eo || 'Set Name')}</b>${C.desig ? ' · ' + esc(C.desig) : ''} ✏</span>
         <input id="eoQ" placeholder="Find No., victim, mobile, FIR, PS…" value="${esc(st.q)}" style="max-width:260px"><button class="btn primary" id="eoAdd">➕ Add Enquiry</button><button class="btn" id="eoRep">📄 Enquiry Report</button></div>
         <div id="eoT" style="margin-top:10px"></div></div>`;
-    Table($('#eoT', el), { rows, pageSize: 25, sortKey: 'sr', sortDir: -1, exportName: 'enquiries', onRow: r => this.edit(r, el), columns: [
+    Table($('#eoT', el), { rows, pageSize: 25, sortKey: 'sr', sortDir: -1, exportName: 'enquiries', onRow: r => this.view(r, el), columns: [
       { key: 'sr', label: 'SR', num: true, sortVal: r => +r.sr || 0 },
-      { key: 'type', label: 'Type', render: r => { const t = this.TYPES[r.type] || this.TYPES.COMP; return `<span class="eo-ty" style="--c:${t[2]}">${t[0]} ${esc(r.type === 'NCRP' ? 'NCRP' : r.type || 'COMP')}</span>`; } },
+      { key: 'type', label: 'Type', render: r => { const t = this.TYPES[r.type] || this.TYPES.COMP; return `<span class="eo-ty" data-eoid="${esc(r.id)}" style="--c:${t[2]}">${t[0]} ${esc(r.type === 'NCRP' ? 'NCRP' : r.type || 'COMP')}</span>`; } },
       { key: 'no', label: 'Case / Complaint No.', render: r => `<b>${esc(this.caseNo(r))}</b>`, csv: r => this.caseNo(r) },
-      { key: 'victim', label: 'Victim', render: r => `<b>${esc(r.victim || '')}</b>${r.mobile ? `<div class="small muted">📞 ${esc(r.mobile)}</div>` : ''}` },
+      { key: 'victim', label: 'Victim', render: r => `<div class="eo-vic"><b>${esc(r.victim || '')}</b>${r.mobile ? `<span class="eo-mob">📞 ${esc(r.mobile)}</span>` : ''}</div>` },
       { key: 'amount', label: 'Fraud Amount', num: true, sortVal: r => +r.amount || 0, render: r => +r.amount ? `<b class="${+r.amount > this.HI ? 'eo-hi' : ''}">${fmtINR(+r.amount)}</b>` : '' },
-      { key: 'brief', label: 'Short Details', render: r => `<span class="small">${esc(String(r.brief || '').slice(0, 140))}</span>` },
-      { key: 'recv', label: 'Received', render: r => esc(this.dmy(r.recv)) },
-      { key: 'sent', label: 'Report Sent / Closed', render: r => esc(this.dmy(r.sent)) },
+      { key: 'brief', label: 'Short Details', render: r => `<span class="eo-clip">${esc(String(r.brief || ''))}</span>` },
+      { key: 'recv', label: 'Received', sortVal: r => r.recv || '', render: r => `<span class="eo-dt">${esc(this.dmy(r.recv))}</span>` },
+      { key: 'sent', label: 'Report Sent / Closed', sortVal: r => r.sent || '', render: r => `<span class="eo-dt">${esc(this.dmy(r.sent))}</span>` },
       { key: 'days', label: 'Days', num: true, sortVal: r => this.days(r) === '' ? -1 : this.days(r), render: r => { const d = this.days(r); return d === '' ? '' : `<b class="${r.status === 'Pending' && d >= 30 ? 'bad-t' : ''}">${d}</b>`; } },
       { key: 'status', label: 'Status', csv: r => this.stTxt(r), render: r => { const s = this.ST[r.status] || this.ST.Pending; return `<span class="eo-st" style="--c:${s[2]}">${s[0]} ${s[1]}</span>${r.status === 'FIR' && this.firTxt(r) ? `<div class="small muted">${esc(this.firTxt(r))}</div>` : ''}`; } },
-      { key: 'notes', label: 'Closing Notes', render: r => `<span class="small">${esc(String(r.notes || '').slice(0, 120))}</span>` },
+      { key: 'notes', label: 'Closing Notes', render: r => `<span class="eo-clip">${esc(String(r.notes || ''))}</span>` },
       { key: 'act', label: 'Edit / Remove', nosort: true, noexport: true, render: r => `<span class="eo-act"><button class="btn sm" data-eoe="${esc(r.id)}" title="Edit this enquiry">✏️</button><button class="btn sm danger" data-eod="${esc(r.id)}" title="Remove this enquiry">🗑</button></span>` }] });
     $('#eoT', el).addEventListener('click', async e => { const b = e.target.closest('[data-eoe],[data-eod]'); if (!b) return; e.stopPropagation(); e.preventDefault();
       const all = await this.list(), r = all.find(y => y.id === (b.dataset.eoe || b.dataset.eod)); if (!r) return;
       if (b.dataset.eoe) return this.edit(r, el);
       if (!UI.confirm(`Remove enquiry SR ${r.sr || ''} – ${this.caseNo(r)}${r.victim ? ' – ' + r.victim : ''}?`)) return;
       all.splice(all.indexOf(r), 1); await Off.put('eo'); UI.toast('🗑 Enquiry removed'); this.page(el); }, true);
+    /* hover a row = quick look, click = full enquiry inside (Vijay 14-11) */
+    { const T = $('#eoT', el); let tm = 0, cur = null; const byId = id => rows.find(x => x.id === id);
+      T.addEventListener('mouseover', e => { const tr = e.target.closest('tbody tr'); if (tr === cur) return; cur = tr; clearTimeout(tm); this.rowTip(null); const k = tr && tr.querySelector('[data-eoid]'); if (!k || e.target.closest('.eo-act')) return; tm = setTimeout(() => { const r = byId(k.dataset.eoid); if (r) this.rowTip(tr, r); }, 350); });
+      T.addEventListener('mouseleave', () => { cur = null; clearTimeout(tm); this.rowTip(null); }); }
     const re = () => this.page(el);
     $$('[data-eof]', el).forEach(b => { b.onclick = () => { st.f = b.dataset.eof === 'all' ? '' : b.dataset.eof; re(); };
       b.onmouseenter = () => this.tip(b, L.filter(r => this.match(r, b.dataset.eof === 'all' ? '' : b.dataset.eof))); b.onmouseleave = () => this.tip(null); });
@@ -63,6 +67,24 @@ const EO = {
     $('#eoAdd', el).onclick = () => this.edit(null, el);
     $('#eoRep', el).onclick = () => this.report(rows, el);
     $('#eoWho', el).onclick = () => this.who(el);
+  },
+  rowTip(tr, r) {
+    let t = $('#eoRowTip'); if (!tr) { if (t) t.remove(); return; }
+    if (!t) { t = document.createElement('div'); t.id = 'eoRowTip'; t.className = 'ag-tip eo-rtip'; document.body.appendChild(t); }
+    const s = this.ST[r.status] || this.ST.Pending, d = this.days(r);
+    t.innerHTML = `<b>${s[0]} SR ${esc(r.sr || '')} · ${esc(this.caseNo(r))}</b><div>👤 ${esc(r.victim || '—')}${r.mobile ? ' · 📞 ' + esc(r.mobile) : ''}</div>${+r.amount ? `<div>💰 <span class="${+r.amount > this.HI ? 'eo-hi' : ''}">${fmtINR(+r.amount)}</span></div>` : ''}<div>📅 Received ${esc(this.dmy(r.recv) || '—')}${r.sent ? ' · Closed ' + esc(this.dmy(r.sent)) : ''}${d !== '' ? ` · <i>${d} days</i>` : ''}</div><div>📌 ${esc(this.stTxt(r))}</div>${r.brief ? `<div class="eo-rt-x"><b>Details:</b> ${esc(String(r.brief).slice(0, 300))}</div>` : ''}${r.notes ? `<div class="eo-rt-x"><b>Notes:</b> ${esc(String(r.notes).slice(0, 300))}</div>` : ''}<div class="muted small">Click the row to open the full enquiry</div>`;
+    const b = tr.getBoundingClientRect(); t.style.left = Math.min(innerWidth - 460, Math.max(8, b.left + 40)) + 'px'; t.style.top = (b.bottom + 6 + t.offsetHeight > innerHeight ? Math.max(8, b.top - 6 - t.offsetHeight) : b.bottom + 6) + 'px';
+  },
+  /* full enquiry, inside view: every field, then Edit / Report */
+  view(r, el) {
+    this.rowTip(null); const s = this.ST[r.status] || this.ST.Pending, t = this.TYPES[r.type] || this.TYPES.COMP, d = this.days(r);
+    const kv = [['SR No.', r.sr], ['Type', t[1]], ['Case / Complaint No.', this.caseNo(r)], ['Victim', r.victim], ['Victim Mobile', r.mobile], ['Fraud Amount', +r.amount ? fmtINR(+r.amount) : ''], ['Complaint Received', this.dmy(r.recv)], ['Report Sent / Closed', this.dmy(r.sent)], ['Days', d === '' ? '' : d + (r.status === 'Pending' ? ' (pending)' : '')], ['Status', this.stTxt(r)]].filter(x => x[1] !== '' && x[1] != null);
+    const body = UI.drawer(`${t[0]} ${this.caseNo(r) || 'Enquiry'}`, `<div class="eo-view"><span class="eo-st" style="--c:${s[2]}">${s[0]} ${s[1]}</span>
+      <dl class="kv">${kv.map(([k, v]) => `<dt>${k}</dt><dd>${esc(String(v))}</dd>`).join('')}</dl>
+      ${r.brief ? `<h4>Short Details / Brief Facts</h4><p class="eo-pre">${esc(r.brief)}</p>` : ''}${r.notes ? `<h4>Closing Notes / Findings</h4><p class="eo-pre">${esc(r.notes)}</p>` : ''}
+      <div class="row" style="gap:8px;margin-top:12px"><button class="btn primary" id="eoVe">✏️ Edit</button>${r.mobile ? `<button class="btn" id="eoVs" title="Search this mobile in the whole tool">🔍 Search ${esc(r.mobile)}</button>` : ''}</div></div>`);
+    $('#eoVe', body).onclick = () => { UI.closeDrawer(); this.edit(r, el); };
+    const vs = $('#eoVs', body); if (vs) vs.onclick = () => { const q = $('#gsearch'); if (q) { q.value = r.mobile; q.dispatchEvent(new Event('input', { bubbles: true })); q.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })); } };
   },
   tip(el, list) {
     let t = $('#agTip'); if (!el) { if (t) t.remove(); return; }
