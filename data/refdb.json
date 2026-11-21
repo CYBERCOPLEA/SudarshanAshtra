@@ -1,0 +1,35 @@
+{
+ "built": "2026-11-16",
+ "packs": {
+  "ifsc": {
+   "bytes": 8199373,
+   "date": "2026-11-09",
+   "file": "ifsc-data.gz"
+  },
+  "ip": {
+   "asn4": 12719,
+   "asn6": 4520,
+   "bytes": 2283015,
+   "city4": 77450,
+   "city6": 91053,
+   "date": "2025-12-01",
+   "file": "ip-data.gz",
+   "rows": 185742
+  },
+  "mob": {
+   "bytes": 55376,
+   "carrier": 3258,
+   "date": "2026-11-16",
+   "file": "mob-data.gz",
+   "landline": 8823,
+   "rows": 14328,
+   "series": 2247
+  },
+  "pin": {
+   "bytes": 56587,
+   "date": "2026-11-16",
+   "file": "pin-data.gz",
+   "rows": 18839
+  }
+ }
+}
